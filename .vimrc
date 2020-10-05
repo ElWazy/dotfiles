@@ -6,6 +6,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mattn/emmet-vim'
+Plugin 'morhetz/gruvbox'
 call vundle#end()
 
 filetype plugin indent on
@@ -52,4 +53,4 @@ set background=dark
 let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 
-colorscheme solarized
+colorscheme gruvbox 
