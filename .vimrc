@@ -2,12 +2,10 @@ set nocompatible
 
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'morhetz/gruvbox'
-call vundle#end()
+call plug#begin()
+Plug 'mattn/emmet-vim'
+Plug 'morhetz/gruvbox'
+call plug#end()
 
 filetype plugin indent on
 
@@ -31,7 +29,6 @@ set noshiftround
 set scrolloff=3
 set backspace=indent,eol,start
 set matchpairs+=<:>
-runtime! macros/matchit.vim
 
 set ttyfast
 
