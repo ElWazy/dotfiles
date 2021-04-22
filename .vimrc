@@ -1,53 +1,49 @@
-set nocompatible
-
-filetype off
-
-call plug#begin()
-Plug 'mattn/emmet-vim'
-Plug 'morhetz/gruvbox'
-call plug#end()
-
-filetype plugin indent on
-
 syntax on
 
 set modelines=0
-
-set rnu
-set ruler
 set encoding=utf-8
-
-set wrap
-set textwidth=79
-set formatoptions=tcqrn1
-set tabstop=4
+set noerrorbells
+set tabstop=4 softtabstop=4
 set shiftwidth=4
-set softtabstop=4
 set expandtab
-set noshiftround
-
-set scrolloff=3
-set backspace=indent,eol,start
-set matchpairs+=<:>
-
-set ttyfast
-
-set laststatus=2
-
-set showmode
-set showcmd
-
-let g:user_emmet_leader_key=','
-
-set hlsearch
-set incsearch
-set ignorecase
+set smartindent
+set rnu
+set nowrap
 set smartcase
-set showmatch
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
 
 set t_Co=256
-set background=dark
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-colorscheme gruvbox 
+call plug#begin('~/.vim/plugged')
+
+Plug 'morhetz/gruvbox'
+Plug 'jremmen/vim-ripgrep'
+Plug 'vim-utils/vim-man'
+Plug 'mattn/emmet-vim'
+
+call plug#end()
+
+colorscheme gruvbox
+set background=dark
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+
+let mapleader = " "
+
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <Leader>ps :Rg<SPACE>
+nnoremap <silent> <Leader>+ :vertical resize +5<CR>
+nnoremap <silent> <Leader>- :vertical resize -5<CR>
