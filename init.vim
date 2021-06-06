@@ -37,7 +37,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
 
 " C#
-Plug 'OmniSharp/omnisharp-vim'
+"Plug 'OmniSharp/omnisharp-vim'
 
 " Find
 Plug 'jremmen/vim-ripgrep'
@@ -56,14 +56,15 @@ Plug 'weirongxu/plantuml-previewer.vim'
 
 call plug#end()
 
-let g:OmniSharp_server_use_mono = 1
-inoremap <expr> <Tab> pumvisible() ? '<C-n>' :                                                                                                                    
-\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+"let g:OmniSharp_server_use_mono = 1
+"inoremap <expr> <Tab> pumvisible() ? '<C-n>' :                                                                                                                    
+"\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
 
 set termguicolors
 set background=dark
 let g:gruvbox_contrast_dark="medium"
 colorscheme gruvbox
+highlight Normal guibg=none
 
 if executable('rg')
     let g:rg_derive_root='true'
