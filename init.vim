@@ -26,7 +26,7 @@ call plug#begin(stdpath('data') . '/plugged')
 " Theme
 Plug 'morhetz/gruvbox'
 Plug 'leafgarland/typescript-vim'
-Plug 'aklt/plantuml-syntax'
+"Plug 'aklt/plantuml-syntax'
 Plug 'junegunn/goyo.vim'
 
 " Git integration
@@ -48,11 +48,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim'
  
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 " PlantUML
-Plug 'tyru/open-browser.vim'
-Plug 'weirongxu/plantuml-previewer.vim'
+"Plug 'tyru/open-browser.vim'
+"Plug 'weirongxu/plantuml-previewer.vim'
 
 call plug#end()
 
@@ -104,7 +104,4 @@ vnoremap <c-t> :split<CR>:ter<CR>
 " Splits
 nnoremap <leader>vs :vsp<CR>
 nnoremap <leader>hs :sp<CR>
-
-" Close Buffer
-nnoremap <leader>q :q<CR>
 
