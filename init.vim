@@ -1,85 +1,56 @@
-filetype indent plugin on
 syntax on
 
+set modelines=0
+set encoding=utf-8
+set wildmode=longest,list,full
+set wildmenu
+set wildignore+=**/node_modules/*
+set wildignore+=**/.git/*
+set guicursor=
+set relativenumber
+set nohlsearch
+set hidden
 set noerrorbells
-set sw=4
+set tabstop=4 softtabstop=4
+set shiftwidth=4
 set expandtab
 set smartindent
-set number relativenumber
-set nu rnu
+set nu
 set nowrap
 set noswapfile
 set nobackup
-set nohlsearch
+set undofile
+set undodir=~/.vim/undodir
 set incsearch
-set ignorecase
-set clipboard=unnamedplus
-set encoding=utf-8
+set termguicolors
 set scrolloff=8
-set guicursor=
-
+set signcolumn=yes
+set cmdheight=1
 set colorcolumn=80
-highlight ColoColumn ctermbg=0 guibg=lightgray
+set autoindent
 
-call plug#begin(stdpath('data') . '/plugged')
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-" Theme
+call plug#begin('~/.vim/plugged')
+
 Plug 'morhetz/gruvbox'
-Plug 'leafgarland/typescript-vim'
-"Plug 'aklt/plantuml-syntax'
-Plug 'junegunn/goyo.vim'
-
-" Git integration
-Plug 'tpope/vim-fugitive'
-
-" ## Code ##
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'jiangmiao/auto-pairs'
-
-" C#
-"Plug 'OmniSharp/omnisharp-vim'
-
-" Find
-Plug 'jremmen/vim-ripgrep'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" HTML
+Plug 'vim-utils/vim-man'
 Plug 'mattn/emmet-vim'
- 
-" Markdown
-"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'cohama/lexima.vim'
 
-" PlantUML
-"Plug 'tyru/open-browser.vim'
-"Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
 
 call plug#end()
 
-"let g:OmniSharp_server_use_mono = 1
-"inoremap <expr> <Tab> pumvisible() ? '<C-n>' :                                                                                                                    
-"\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+set completeopt=menu,menuone,noselect
 
-set termguicolors
+let g:gruvbox_contrast_dark = 'hard'
 set background=dark
-let g:gruvbox_contrast_dark="medium"
 colorscheme gruvbox
-highlight Normal guibg=none
-
-if executable('rg')
-    let g:rg_derive_root='true'
-endif
-
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
-let mapleader = " "
-
-" Update vimrc
-nmap <F5> :source ~/.config/nvim/init.vim<CR>
-vmap <F5> :source ~/.config/nvim/init.vim<CR>
-
-" Jump to vimrc
-nnoremap <leader>e :e $MYVIMRC<CR>
+hi Normal guibg=NONE ctermbg=NONE
 
 " NO FLECHAS
 noremap <up> <nop>
@@ -87,21 +58,69 @@ noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
 
-" Search References
-nnoremap <Leader>ps :Rg<SPACE>
-nnoremap <C-p> :Files<CR>
-
 " Resize buffers
 nnoremap <silent> <up> :resize +5<CR>
 nnoremap <silent> <down> :resize -5<CR>
 nnoremap <silent> <left> :vertical resize -5<CR>
 nnoremap <silent> <right> :vertical resize +5<CR>
 
-" Terminal
-nnoremap <c-t> :split<CR>:ter<CR>
-vnoremap <c-t> :split<CR>:ter<CR>
+lua << EOF
+local nvim_lsp = require('lspconfig')
 
-" Splits
-nnoremap <leader>vs :vsp<CR>
-nnoremap <leader>hs :sp<CR>
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    -- Enable completion triggered by <c-x><c-o>
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+end
+
+local cmp = require'cmp'
+
+cmp.setup({
+    mapping = {
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'buffer' },
+    })
+})
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+require'lspconfig'.phpactor.setup{
+    on_attach = on_attach,
+    flags = {
+        debounce_text_changes = 150,
+    },
+    capabilities = capabilities
+}
+EOF
 
