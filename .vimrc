@@ -12,6 +12,7 @@ set nu rnu
 set nowrap
 set smartcase
 set hidden
+set viminfo='50,<1000,s100,:0,n~/vim/viminfo
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
