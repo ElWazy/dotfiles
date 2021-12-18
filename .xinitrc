@@ -1,3 +1,8 @@
+# Exports
+export _JAVA_AWT_WM_NONREPARENTING=1
+export AWT_TOOLKIT=MToolKit
+export NODE_OPTIONS=--openssl-legacy-provider
+
 # Keyboard
 setxkbmap latam & 
 
@@ -13,10 +18,7 @@ nitrogen --restore &
 compton --vsync opengl-swc --backend glx &
 
 # Welcome Message
-# xsetroot -name "Hi $USER!" &
-
-# Suckless Status
-slstatus & 
+xsetroot -name "Hi $USER!" &
 
 # Execute DWM
 exec dwm
