@@ -12,14 +12,17 @@ setxkbmap latam &
 xrandr --output DP-1 --mode 1280x800 --output eDP-1 --mode 1366x768 --right-of DP-1 &
 # xrandr --output eDP-1 --mode 1366x768 &
 
-# Nitrogen
+# Wallpaper Engine
 nitrogen --restore &
 
 # Compositor
-compton --vsync opengl-swc --backend glx &
+picom --config ~/.config/picom/picom.conf &
 
-# Welcome Message
-./projects/compiles/goblocks/goblocks &
+# Status Bar
+slstatus &
+
+# Screenshot App
+flameshot &
 
 # Execute DWM
-exec dbus-launch dwm
+exec dwm
