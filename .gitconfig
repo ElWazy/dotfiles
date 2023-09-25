@@ -1,5 +1,7 @@
 [core]
-	editor = vim
+  editor = vim
 [user]
-	name = ElWazy
-	email = ElCazero.Fer@gmail.com
+  name = ElWazy
+  email = ElCazero.Fer@gmail.com
+[pull]
+	ff = only
